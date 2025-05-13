@@ -1,6 +1,6 @@
-/* MCP Shrimp Task Manager 網站樣式 */
+/* MCP Shrimp Task Manager Website Styles */
 
-/* 全局變量 */
+/* Global Variables */
 :root {
   --primary-color: #3b82f6;
   --primary-dark: #2563eb;
@@ -19,7 +19,7 @@
   --solution-purple: #8b5cf6;
 }
 
-/* 全局樣式 */
+/* Global Styles */
 html {
   scroll-behavior: smooth;
   overflow-x: hidden; /* 防止水平溢出 */
@@ -30,7 +30,7 @@ body {
   overflow-x: hidden; /* 防止水平溢出 */
 }
 
-/* 自定義動畫 */
+/* Custom Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -87,7 +87,7 @@ body {
   }
 }
 
-/* 導航欄樣式 */
+/* Navigation Bar Styles */
 header nav img {
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -129,7 +129,7 @@ header nav a:hover::after {
   max-height: 500px;
 }
 
-/* 英雄區樣式 */
+/* Hero Section Styles */
 #hero {
   position: relative;
   overflow: hidden;
@@ -181,7 +181,7 @@ header nav a:hover::after {
   animation-fill-mode: forwards;
 }
 
-/* 痛點與解決方案區樣式 */
+/* Pain Points and Solutions Section Styles */
 #pain-points .shadow-lg {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -248,7 +248,7 @@ header nav a:hover::after {
   background-color: var(--solution-purple);
 }
 
-/* 按鈕樣式 */
+/* Button Styles */
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
@@ -303,7 +303,7 @@ header nav a:hover::after {
   box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
 }
 
-/* 卡片樣式 */
+/* Card Styles */
 .card {
   background-color: white;
   border-radius: 0.5rem;
@@ -316,7 +316,7 @@ header nav a:hover::after {
   box-shadow: 0 15px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* 代碼區塊樣式增強 */
+/* Code Block Style Enhancements */
 pre[class*="language-"] {
   border-radius: 0.5rem;
   margin: 1.5rem 0;
@@ -329,7 +329,7 @@ pre[class*="language-"]:hover {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* 響應式調整 - 手機端 (<768px) */
+/* Responsive Adjustments - Mobile (<768px) */
 @media (max-width: 767px) {
   h1 {
     font-size: 1.875rem;
@@ -376,7 +376,7 @@ pre[class*="language-"]:hover {
   }
 }
 
-/* 平板端 (768px-1024px) */
+/* Tablet (768px-1024px) */
 @media (min-width: 768px) and (max-width: 1023px) {
   h1 {
     font-size: 2.25rem;

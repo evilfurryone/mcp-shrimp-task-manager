@@ -9,7 +9,7 @@ export const listTasksSchema = z.object({
     .describe("要列出的任務狀態，可選擇 'all' 列出所有任務，或指定具體狀態"),
 });
 
-// 列出任務工具
+// List tasks tool
 export async function listTasks({ status }: z.infer<typeof listTasksSchema>) {
   const tasks = await getAllTasks();
   let filteredTasks = tasks;
@@ -54,7 +54,7 @@ export async function listTasks({ status }: z.infer<typeof listTasksSchema>) {
     return acc;
   }, {} as Record<string, typeof tasks>);
 
-  // 使用prompt生成器獲取最終prompt
+  // Use prompt generator to get final prompt
   const prompt = getListTasksPrompt({
     status,
     tasks: tasksByStatus,

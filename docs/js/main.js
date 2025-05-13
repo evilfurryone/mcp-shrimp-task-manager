@@ -1,51 +1,51 @@
 /**
- * MCP Shrimp Task Manager 網站主腳本
+ * MCP Shrimp Task Manager Website Main Script
  */
 
-// 頁面加載完成後執行
+// Execute after page loading is complete
 document.addEventListener("DOMContentLoaded", function () {
-  // 初始化滾動動畫
+  // Initialize scroll animations
   initAOS();
 
-  // 初始化移動端菜單
+  // Initialize mobile menu
   initMobileMenu();
 
-  // 初始化代碼高亮和複製功能
+  // Initialize code highlighting and copy functionality
   initCodeBlocks();
 
-  // 平滑滾動功能
+  // Smooth scrolling functionality
   initSmoothScroll();
 
-  // 英雄區特效
+  // Hero section effects
   initHeroEffects();
 
-  // 痛點與解決方案區特效
+  // Pain points and solutions section effects
   initPainPointsEffects();
 
-  // 核心功能展示區特效
+  // Core features display section effects
   initFeaturesEffects();
 
-  // 工作流程展示區特效
+  // Workflow display section effects
   initWorkflowEffects();
 
-  // 初始化安裝與配置區功能
+  // Initialize installation and configuration section functionality
   initInstallationSection();
 
-  // 檢測頁面滾動位置以顯示回到頂部按鈕
+  // Detect page scroll position to display back-to-top button
   initScrollToTopButton();
 
-  // 初始化響應式圖片懶加載
+  // Initialize responsive image lazy loading
   initLazyLoading();
 
-  // 初始化頁面進入動畫
+  // Initialize page entrance animation
   initPageEntranceAnimation();
 
-  // 多語系功能
+  // Multi-language functionality
   initMultiLanguage();
 });
 
 /**
- * 初始化AOS滾動動畫庫
+ * Initialize AOS scroll animation library
  */
 function initAOS() {
   AOS.init({
@@ -54,19 +54,19 @@ function initAOS() {
     once: true,
     mirror: true,
     disable: function () {
-      // 只在低性能設備上禁用動畫，根據用戶偏好設置
+      // Only disable animations on low-performance devices, based on user preference settings
       return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     },
   });
 
-  // 在窗口調整大小時重新初始化AOS以確保正確的觸發位置
+  // Reinitialize AOS when window is resized to ensure correct trigger positions
   window.addEventListener("resize", function () {
     AOS.refresh();
   });
 }
 
 /**
- * 初始化移動端菜單
+ * Initialize mobile menu
  */
 function initMobileMenu() {
   const menuToggle = document.getElementById("menu-toggle");
@@ -76,39 +76,39 @@ function initMobileMenu() {
     menuToggle.addEventListener("click", function (e) {
       e.preventDefault();
 
-      // 為了支持過渡效果，先移除hidden類
+      // To support transition effects, first remove the hidden class
       if (mobileMenu.classList.contains("hidden")) {
         mobileMenu.classList.remove("hidden");
 
-        // 等待DOM更新，然後添加visible類啟動過渡效果
+        // Wait for DOM update, then add visible class to trigger transition effect
         setTimeout(() => {
           mobileMenu.classList.add("visible");
         }, 10);
       } else {
-        // 先移除visible類觸發過渡效果
+        // First remove visible class to trigger transition effect
         mobileMenu.classList.remove("visible");
 
-        // 等待過渡完成，然後隱藏菜單
+        // Wait for transition to complete, then hide menu
         setTimeout(() => {
           mobileMenu.classList.add("hidden");
-        }, 300); // 300ms與CSS過渡時間匹配
+        }, 300); // 300ms matches CSS transition time
       }
     });
 
-    // 點擊菜單項後關閉菜單
+    // Close menu after clicking menu items
     const menuLinks = mobileMenu.querySelectorAll("a");
     menuLinks.forEach((link) => {
       link.addEventListener("click", function () {
         mobileMenu.classList.remove("visible");
 
-        // 等待過渡完成，然後隱藏菜單
+        // Wait for transition to complete, then hide menu
         setTimeout(() => {
           mobileMenu.classList.add("hidden");
         }, 300);
       });
     });
 
-    // 點擊菜單外區域關閉菜單
+    // Close menu when clicking outside menu area
     document.addEventListener("click", function (e) {
       if (
         !menuToggle.contains(e.target) &&
@@ -126,37 +126,37 @@ function initMobileMenu() {
 }
 
 /**
- * 英雄區特效初始化
+ * Hero section effects initialization
  */
 function initHeroEffects() {
-  // 獲取英雄區
+  // Get hero section
   const heroSection = document.getElementById("hero");
   if (!heroSection) return;
 
-  // 添加浮動裝飾元素的動畫序列
+  // Add animation sequence for floating decorative elements
   const decorElements = heroSection.querySelectorAll(".absolute");
   decorElements.forEach((elem, index) => {
     elem.style.setProperty("--animation-order", index + 1);
 
-    // 使用淡入動畫讓元素在頁面加載後逐個顯示
+    // Use fade-in animation to gradually display elements after page load
     setTimeout(() => {
       elem.style.opacity = "0.8";
     }, (index + 1) * 200);
   });
 
-  // 添加視差滾動效果
+  // Add parallax scrolling effect
   window.addEventListener("scroll", function () {
     const scrollTop = window.pageYOffset;
     const heroHeight = heroSection.offsetHeight;
 
-    // 當用戶滾動經過英雄區時應用效果
+    // Apply effects when user scrolls through hero section
     if (scrollTop <= heroHeight) {
       const scrollPercentage = scrollTop / heroHeight;
 
-      // 英雄區域淡出效果
+      // Hero section fade-out effect
       heroSection.style.opacity = 1 - scrollPercentage * 0.8;
 
-      // 標題向上移動效果
+      // Title upward movement effect
       const heroTitle = heroSection.querySelector("h1");
       if (heroTitle) {
         heroTitle.style.transform = `translateY(${scrollPercentage * 50}px)`;
@@ -164,14 +164,14 @@ function initHeroEffects() {
     }
   });
 
-  // 添加滑鼠移動視差效果
+  // Add mouse movement parallax effect
   heroSection.addEventListener("mousemove", function (e) {
-    // 只在更大的屏幕上啟用這個效果
+    // Only enable this effect on larger screens
     if (window.innerWidth >= 768) {
       const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
       const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
 
-      // 獲取英雄區內的圖片元素
+      // Get image elements within the hero section
       const heroImage = heroSection.querySelector("img");
       if (heroImage) {
         heroImage.style.transform = `translate(${moveX * 2}px, ${
@@ -179,9 +179,9 @@ function initHeroEffects() {
         }px) scale(1.02)`;
       }
 
-      // 獲取英雄區內的裝飾元素
+      // Get decorative elements within the hero section
       decorElements.forEach((elem, index) => {
-        // 使用不同的移動比例，創造層次感
+        // Use different movement ratios to create a sense of depth
         const factorX = (index + 1) * 0.03;
         const factorY = (index + 1) * 0.02;
         elem.style.transform = `translate(${moveX * factorX}px, ${
@@ -191,7 +191,7 @@ function initHeroEffects() {
     }
   });
 
-  // 鼠標離開時重置元素位置
+  // Reset element positions when mouse leaves
   heroSection.addEventListener("mouseleave", function () {
     const heroImage = heroSection.querySelector("img");
     if (heroImage) {
@@ -203,10 +203,10 @@ function initHeroEffects() {
     });
   });
 
-  // Logo動畫效果
+  // Logo animation effect
   const logo = document.querySelector("header nav img");
   if (logo) {
-    // 導航欄 logo 在頁面加載時輕微旋轉動畫
+    // Slight rotation animation for navigation bar logo when page loads
     logo.style.transition = "transform 1s ease-out";
     logo.style.transform = "rotate(0deg)";
 
@@ -220,33 +220,33 @@ function initHeroEffects() {
 }
 
 /**
- * 痛點與解決方案區特效初始化
+ * Pain points and solutions section effects initialization
  */
 function initPainPointsEffects() {
   const painPointsSection = document.getElementById("pain-points");
   if (!painPointsSection) return;
 
-  // 獲取所有卡片
+  // Get all cards
   const cards = painPointsSection.querySelectorAll(
     ".rounded-lg.overflow-hidden"
   );
 
-  // 為每個卡片添加延遲出現動畫
+  // Add delayed appearance animation for each card
   cards.forEach((card, index) => {
     card.setAttribute("data-aos", "fade-up");
     card.setAttribute("data-aos-delay", (index * 150).toString());
   });
 
-  // 為每個卡片添加鼠標進入和離開效果
+  // Add mouse enter and leave effects for each card
   cards.forEach((card, index) => {
-    // 獲取痛點和解決方案區塊
+    // Get pain points and solution blocks
     const painIcon = card.querySelector(".p-6 img");
     const solutionIcon = card.querySelector(".p-4 img");
     const arrowIcon = card.querySelector(".h-8.w-8.text-green-500");
 
     // 鼠標進入效果
     card.addEventListener("mouseenter", function () {
-      // 延遲執行動畫，營造序列動畫效果
+      // Delay animation execution to create sequential animation effect
       if (painIcon) {
         setTimeout(() => {
           painIcon.style.transform = "scale(1.1) rotate(5deg)";
@@ -265,44 +265,44 @@ function initPainPointsEffects() {
         }, 300);
       }
 
-      // 添加發光效果
+      // Add glow effect
       card.style.boxShadow =
         "0 20px 30px rgba(0, 0, 0, 0.15), 0 0 15px rgba(59, 130, 246, 0.3)";
     });
 
-    // 鼠標離開效果
+    // Mouse leave effect
     card.addEventListener("mouseleave", function () {
       if (painIcon) painIcon.style.transform = "";
       if (arrowIcon) arrowIcon.style.transform = "";
       if (solutionIcon) solutionIcon.style.transform = "";
 
-      // 移除發光效果
+      // Remove glow effect
       card.style.boxShadow = "";
     });
   });
 
-  // 添加視差滾動效果
+  // Add parallax scrolling effect
   window.addEventListener("scroll", function () {
-    // 只在更大的屏幕上啟用這個效果
+    // Only enable this effect on larger screens
     if (window.innerWidth >= 768) {
       const scrollPosition = window.scrollY;
       const sectionTop = painPointsSection.offsetTop;
       const sectionHeight = painPointsSection.offsetHeight;
 
-      // 當用戶滾動到該區域時應用效果
+      // Apply effect when user scrolls to the section
       if (
         scrollPosition > sectionTop - window.innerHeight &&
         scrollPosition < sectionTop + sectionHeight
       ) {
         cards.forEach((card, index) => {
-          // 相對於部分的滾動位置
+          // Calculate relative scroll position
           const relativeScroll =
             (scrollPosition - (sectionTop - window.innerHeight)) /
             (sectionHeight + window.innerHeight);
-          // 根據卡片位置計算偏移量
+          // Calculate offset based on card position
           const offset = Math.sin(relativeScroll * Math.PI + index * 0.5) * 15;
 
-          // 根據索引設置不同的偏移方向
+          // Set different offset direction based on index
           if (index % 2 === 0) {
             card.style.transform = `translateY(${offset}px)`;
           } else {
@@ -315,24 +315,24 @@ function initPainPointsEffects() {
 }
 
 /**
- * 初始化代碼區塊功能
+ * Initialize code block functionality
  */
 function initCodeBlocks() {
-  // 確保 Prism.js 已加載
+  // Ensure Prism.js is loaded
   if (typeof Prism !== "undefined") {
-    // 代碼高亮應用
+    // Apply code highlighting
     Prism.highlightAll();
   }
 
-  // 初始化代碼示例切換功能
+  // Initialize code example switching functionality
   initCodeTabSwitcher();
 
-  // 可選：添加打字機效果
+  // Optional: Add typewriter effect
   initTypingEffect();
 }
 
 /**
- * 初始化代碼示例標籤切換功能
+ * Initialize code example tab switching functionality
  */
 function initCodeTabSwitcher() {
   const tabButtons = document.querySelectorAll(".code-tab-btn");
@@ -342,29 +342,29 @@ function initCodeTabSwitcher() {
 
   tabButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      // 獲取目標內容ID
+      // Get target content ID
       const targetId = btn.getAttribute("data-target");
 
-      // 取消所有按鈕激活狀態
+      // Cancel all button active states
       tabButtons.forEach((b) => {
         b.classList.remove("active", "bg-blue-50", "text-blue-600");
         b.classList.add("hover:bg-blue-50");
       });
 
-      // 激活當前按鈕
+      // Activate current button
       btn.classList.add("active", "bg-blue-50", "text-blue-600");
 
-      // 隱藏所有內容
+      // Hide all content
       contentSections.forEach((section) => {
         section.classList.add("hidden");
       });
 
-      // 顯示目標內容
+      // Show target content
       const targetSection = document.getElementById(targetId);
       if (targetSection) {
         targetSection.classList.remove("hidden");
 
-        // 確保激活內容區的代碼高亮
+        // Ensure code highlighting in the activated content area
         const codeBlocks = targetSection.querySelectorAll("code");
         if (typeof Prism !== "undefined" && codeBlocks.length) {
           codeBlocks.forEach((block) => {
@@ -377,10 +377,10 @@ function initCodeTabSwitcher() {
 }
 
 /**
- * 初始化打字機效果 (可選功能)
+ * Initialize typewriter effect (optional feature)
  */
 function initTypingEffect() {
-  // 檢查是否啟用打字機效果（可以通過URL參數控制）
+  // Check if typewriter effect is enabled (can be controlled via URL parameters)
   const urlParams = new URLSearchParams(window.location.search);
   const enableTyping = urlParams.get("typing") === "true";
 
@@ -394,12 +394,12 @@ function initTypingEffect() {
     codeBlock.textContent = "";
 
     let charIndex = 0;
-    const typingSpeed = 30; // 每字符間隔毫秒
+    const typingSpeed = 30; // Milliseconds interval per character
 
-    // 先隱藏原始代碼，然後進行打字效果
+    // First hide the original code, then apply the typing effect
     codeBlock.parentElement.classList.add("typing-in-progress");
 
-    // 視窗進入可視區域時啟動打字效果
+    // Start typing effect when the window enters the visible area
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -418,11 +418,11 @@ function initTypingEffect() {
           codeBlock.textContent += originalText.charAt(charIndex);
           charIndex++;
 
-          // 自動滾動代碼塊以跟踪光標
+          // Auto-scroll code block to track cursor
           codeBlock.parentElement.scrollTop =
             codeBlock.parentElement.scrollHeight;
 
-          // 動態應用語法高亮
+          // Dynamically apply syntax highlighting
           if (typeof Prism !== "undefined") {
             Prism.highlightElement(codeBlock);
           }
@@ -436,7 +436,7 @@ function initTypingEffect() {
 }
 
 /**
- * 初始化平滑滾動
+ * Initialize smooth scrolling
  */
 function initSmoothScroll() {
   const links = document.querySelectorAll('a[href^="#"]');
@@ -445,13 +445,13 @@ function initSmoothScroll() {
     link.addEventListener("click", function (e) {
       const href = this.getAttribute("href");
 
-      // 確保不是僅 "#" 的鏈接
+      // Ensure it's not just a "#" link
       if (href !== "#") {
         e.preventDefault();
         const target = document.querySelector(href);
 
         if (target) {
-          // 計算目標元素位置並考慮固定導航欄的高度
+          // Calculate target element position considering fixed navigation bar height
           const headerHeight = document.querySelector("header").offsetHeight;
           const targetPosition =
             target.getBoundingClientRect().top +
@@ -469,22 +469,22 @@ function initSmoothScroll() {
 }
 
 /**
- * 核心功能展示區特效初始化
+ * Core features display section effects initialization
  */
 function initFeaturesEffects() {
   const featuresSection = document.getElementById("features");
   if (!featuresSection) return;
 
-  // 獲取所有功能卡片
+  // Get all feature cards
   const featureCards = featuresSection.querySelectorAll(".rounded-lg");
 
-  // 為每個卡片添加懸停效果
+  // Add hover effect for each card
   featureCards.forEach((card, index) => {
-    // 獲取卡片中的圖標和標題
+    // Get icons and titles in the card
     const featureIcon = card.querySelector(".p-6 img");
     const featureTitle = card.querySelector("h3");
 
-    // 鼠標進入效果
+    // Mouse enter effect
     card.addEventListener("mouseenter", function () {
       if (featureIcon) {
         featureIcon.style.transform = "scale(1.2) rotate(5deg)";
@@ -497,7 +497,7 @@ function initFeaturesEffects() {
       }
     });
 
-    // 鼠標離開效果
+    // Mouse leave effect
     card.addEventListener("mouseleave", function () {
       if (featureIcon) {
         featureIcon.style.transform = "";
@@ -508,7 +508,7 @@ function initFeaturesEffects() {
       }
     });
 
-    // 點擊效果 - 添加輕微彈跳效果
+    // Click effect - Add slight bounce effect
     card.addEventListener("click", function () {
       card.style.transform = "scale(0.95)";
       setTimeout(() => {
@@ -517,28 +517,28 @@ function initFeaturesEffects() {
     });
   });
 
-  // 添加滾動視差效果
+  // Add scrolling parallax effect
   window.addEventListener("scroll", function () {
     const scrollPosition = window.scrollY;
     const windowHeight = window.innerHeight;
 
-    // 計算特效觸發範圍
+    // Calculate effect trigger range
     const sectionTop = featuresSection.offsetTop;
     const sectionHeight = featuresSection.offsetHeight;
     const triggerStart = sectionTop - windowHeight;
     const triggerEnd = sectionTop + sectionHeight;
 
-    // 只在特效範圍內計算視差
+    // Only calculate parallax within effect range
     if (scrollPosition > triggerStart && scrollPosition < triggerEnd) {
       const scrollProgress =
         (scrollPosition - triggerStart) / (triggerEnd - triggerStart);
 
-      // 應用各種視差效果
+      // Apply various parallax effects
       featureCards.forEach((card, index) => {
         const delayFactor = (index % 3) * 0.1;
         const moveY = Math.sin((scrollProgress + delayFactor) * Math.PI) * 15;
 
-        // 應用視差效果
+        // Apply parallax effect
         card.style.transform = `translateY(${moveY}px)`;
       });
     }
@@ -546,21 +546,21 @@ function initFeaturesEffects() {
 }
 
 /**
- * 工作流程展示區特效初始化
+ * Workflow display section effects initialization
  */
 function initWorkflowEffects() {
-  // 步驟詳情彈窗功能
+  // Initialize step detail modal functionality
   initWorkflowModal();
 
-  // 為桌面版時間軸添加連接線動畫
+  // Add connection line animation for desktop timeline
   animateWorkflowConnections();
 
-  // 為步驟圖標添加互動效果
+  // Add interaction effects for step icons
   addWorkflowIconInteractions();
 }
 
 /**
- * 初始化工作流程詳情彈窗
+ * Initialize workflow detail modal
  */
 function initWorkflowModal() {
   const modal = document.getElementById("workflow-detail-modal");
@@ -574,7 +574,7 @@ function initWorkflowModal() {
 
   if (!modal || !closeBtn || !detailLinks.length) return;
 
-  // 工作流程步驟詳情數據
+  // Workflow step detail data
   const workflowDetails = {
     en: {
       1: {
@@ -888,7 +888,7 @@ function initWorkflowModal() {
     },
   };
 
-  // 點擊詳情鏈接打開彈窗
+  // Click detail link to open modal
   detailLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
       e.preventDefault();
@@ -903,7 +903,7 @@ function initWorkflowModal() {
     });
   });
 
-  // 關閉彈窗
+  // Close modal
   function closeModal() {
     modal.classList.add("hidden");
     modal.classList.remove("active");
@@ -912,7 +912,7 @@ function initWorkflowModal() {
   closeBtn.addEventListener("click", closeModal);
   closeBtnAlt.addEventListener("click", closeModal);
 
-  // 點擊彈窗外部關閉
+  // Click outside to close modal
   modal.addEventListener("click", function (e) {
     if (e.target === modal) {
       closeModal();
@@ -921,7 +921,7 @@ function initWorkflowModal() {
 }
 
 /**
- * 為工作流程時間軸添加連接線動畫
+ * Add connection line animation for workflow timeline
  */
 function animateWorkflowConnections() {
   const desktopTimeline = document.querySelector(
@@ -929,7 +929,7 @@ function animateWorkflowConnections() {
   );
   if (!desktopTimeline) return;
 
-  // 當時間軸進入視口時觸發動畫
+  // When timeline enters viewport, trigger animation
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -953,7 +953,7 @@ function animateWorkflowConnections() {
 }
 
 /**
- * 為工作流程步驟圖標添加互動效果
+ * Add interaction effects for workflow step icons
  */
 function addWorkflowIconInteractions() {
   const workflowIcons = document.querySelectorAll(
@@ -976,7 +976,7 @@ function addWorkflowIconInteractions() {
       }
     });
 
-    // 增加點擊效果
+    // Add click effect
     icon.addEventListener("click", function () {
       const link =
         this.parentNode.querySelector(".workflow-detail-link") ||
@@ -990,24 +990,24 @@ function addWorkflowIconInteractions() {
 }
 
 /**
- * 初始化安裝與配置區功能
+ * Initialize installation and configuration section functionality
  */
 function initInstallationSection() {
-  // 初始化安裝方式選項卡切換
+  // Initialize installation method tab switching
   initInstallTabs();
 
-  // 初始化Cursor IDE配置選項卡切換
+  // Initialize Cursor IDE configuration tab switching
   initCursorTabs();
 
-  // 初始化命令行複製按鈕
+  // Initialize command line copy buttons
   initCommandCopyButtons();
 
-  // 添加安裝卡片的動畫效果
+  // Initialize installation cards animation
   initInstallCardsAnimation();
 }
 
 /**
- * 初始化安裝方式選項卡切換
+ * Initialize installation method tab switching
  */
 function initInstallTabs() {
   const tabButtons = document.querySelectorAll(".install-tab-btn");
@@ -1017,11 +1017,11 @@ function initInstallTabs() {
 
   tabButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      // 移除所有活動狀態
+      // Remove all active states
       tabButtons.forEach((btn) => btn.classList.remove("active"));
       contentSections.forEach((section) => section.classList.add("hidden"));
 
-      // 設置當前活動狀態
+      // Set current active state
       button.classList.add("active");
       const targetId = button.getAttribute("data-target");
       const targetSection = document.getElementById(targetId);
@@ -1033,7 +1033,7 @@ function initInstallTabs() {
 }
 
 /**
- * 初始化Cursor IDE配置選項卡切換
+ * Initialize Cursor IDE configuration tab switching
  */
 function initCursorTabs() {
   const tabButtons = document.querySelectorAll(".cursor-tab-btn");
@@ -1043,11 +1043,11 @@ function initCursorTabs() {
 
   tabButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      // 移除所有活動狀態
+      // Remove all active states
       tabButtons.forEach((btn) => btn.classList.remove("active"));
       contentSections.forEach((section) => section.classList.add("hidden"));
 
-      // 設置當前活動狀態
+      // Set current active state
       button.classList.add("active");
       const targetId = button.getAttribute("data-target");
       const targetSection = document.getElementById(targetId);
@@ -1059,7 +1059,7 @@ function initCursorTabs() {
 }
 
 /**
- * 初始化命令行複製按鈕
+ * Initialize command line copy buttons
  */
 function initCommandCopyButtons() {
   const copyButtons = document.querySelectorAll(".copy-cmd-btn");
@@ -1072,7 +1072,7 @@ function initCommandCopyButtons() {
       try {
         await navigator.clipboard.writeText(command);
 
-        // 更新按鈕文字
+        // Update button text
         const originalText = button.textContent.trim();
         button.textContent = "已複製!";
         button.classList.add("bg-gray-600");
@@ -1085,12 +1085,12 @@ function initCommandCopyButtons() {
           "hover:bg-purple-700"
         );
 
-        // 恢復原始狀態
+        //  Restore original state
         setTimeout(() => {
           button.textContent = originalText;
           button.classList.remove("bg-gray-600");
 
-          // 根據按鈕顏色還原樣式
+          // Restore button style based on button color
           if (button.classList.contains("copy-cmd-btn")) {
             if (button.closest("#smithery-install")) {
               button.classList.add("bg-blue-600", "hover:bg-blue-700");
@@ -1110,7 +1110,7 @@ function initCommandCopyButtons() {
 }
 
 /**
- * 安裝卡片的動畫效果
+ * Initialize installation cards animation
  */
 function initInstallCardsAnimation() {
   const installCards = document.querySelectorAll("#installation .grid > div");
@@ -1121,7 +1121,7 @@ function initInstallCardsAnimation() {
       card.style.boxShadow =
         "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)";
 
-      // 找到卡片內的圖標並添加動畫
+      //  Find the icon inside the card and add animation
       const icon = card.querySelector("svg");
       if (icon) {
         icon.style.transform = "scale(1.2)";
@@ -1133,7 +1133,7 @@ function initInstallCardsAnimation() {
       card.style.transform = "";
       card.style.boxShadow = "";
 
-      // 恢復圖標
+      // Restore icon
       const icon = card.querySelector("svg");
       if (icon) {
         icon.style.transform = "";
@@ -1143,10 +1143,10 @@ function initInstallCardsAnimation() {
 }
 
 /**
- * 初始化頁面滾動到頂部按鈕
+ * Initialize scroll to top button
  */
 function initScrollToTopButton() {
-  // 創建回到頂部按鈕元素
+  // Create scroll to top button element
   const scrollToTopBtn = document.createElement("button");
   scrollToTopBtn.id = "scrollToTop";
   scrollToTopBtn.innerHTML =
@@ -1155,10 +1155,10 @@ function initScrollToTopButton() {
     "fixed bottom-5 right-5 bg-blue-600 text-white p-2 rounded-full shadow-lg transform scale-0 transition-transform duration-300";
   scrollToTopBtn.setAttribute("aria-label", "回到頂部");
 
-  // 添加按鈕到文檔
+  // Add button to document
   document.body.appendChild(scrollToTopBtn);
 
-  // 點擊事件 - 平滑滾動到頂部
+  // Click event - smooth scroll to top
   scrollToTopBtn.addEventListener("click", function () {
     window.scrollTo({
       top: 0,
@@ -1166,7 +1166,7 @@ function initScrollToTopButton() {
     });
   });
 
-  // 根據滾動位置顯示或隱藏按鈕
+  // Show or hide buttons based on scroll position
   window.addEventListener("scroll", function () {
     if (window.scrollY > 500) {
       scrollToTopBtn.style.transform = "scale(1)";
@@ -1177,17 +1177,17 @@ function initScrollToTopButton() {
 }
 
 /**
- * 初始化圖片懶加載功能
+ * Initialize lazy loading image functionality
  */
 function initLazyLoading() {
   if ("loading" in HTMLImageElement.prototype) {
-    // 瀏覽器支持原生懶加載
+    // Browser supports native lazy loading
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach((img) => {
       img.src = img.dataset.src;
     });
   } else {
-    // 回退方案 - 使用 Intersection Observer API
+    // Fallback - using Intersection Observer API
     const imgObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -1207,13 +1207,13 @@ function initLazyLoading() {
 }
 
 /**
- * 初始化頁面進入動畫
+ * Initialize page entrance animation
  */
 function initPageEntranceAnimation() {
-  // 頁面加載完成後的動畫效果
+  // Page load animation
   document.body.classList.add("page-loaded");
 
-  // 延遲一點時間後開始序列動畫
+  // Delay and start sequence animation
   setTimeout(() => {
     const header = document.querySelector("header");
     if (header) {
@@ -1232,10 +1232,10 @@ function initPageEntranceAnimation() {
 }
 
 /**
- * 為元素添加動畫類
- * @param {Element} element - 要添加動畫的元素
- * @param {string} animationClass - 要添加的動畫類名
- * @param {number} delay - 延遲時間(毫秒)
+ * Add animation class to element
+ * @param {Element} element - Element to add animation to
+ * @param {string} animationClass - Animation class name
+ * @param {number} delay - Delay time in milliseconds
  */
 function addAnimation(element, animationClass, delay = 0) {
   if (!element) return;
@@ -1243,7 +1243,7 @@ function addAnimation(element, animationClass, delay = 0) {
   setTimeout(() => {
     element.classList.add(animationClass);
 
-    // 動畫結束後移除類
+    //  Remove class after animation ends
     element.addEventListener(
       "animationend",
       () => {
@@ -1255,9 +1255,9 @@ function addAnimation(element, animationClass, delay = 0) {
 }
 
 /**
- * 檢測元素是否在視口中
- * @param {Element} element - 要檢測的元素
- * @returns {boolean} - 元素是否在視口中
+ * Check if element is in viewport
+ * @param {Element} element - Element to check
+ * @returns {boolean} - Whether the element is in viewport
  */
 function isInViewport(element) {
   const rect = element.getBoundingClientRect();
@@ -1270,20 +1270,20 @@ function isInViewport(element) {
 }
 
 /**
- * 初始化多語系功能
+ * Initialize multi-language functionality
  */
 function initMultiLanguage() {
-  // 檢查 i18n.js 是否已載入
+  // Check if i18n.js is loaded
   if (typeof i18n !== "undefined") {
-    // 優先使用增強版初始化函數
+    // Prefer using the enhanced initialization function
     if (typeof enhancedInitializeLanguage === "function") {
       enhancedInitializeLanguage();
     } else if (typeof initializeLanguage === "function") {
-      // 兼容性處理，如果增強版函數不存在則使用原始方法
+      //Compatibility processing, if the enhanced version function does not exist, use the original method
       initializeLanguage();
     } else {
-      console.warn("多語系初始化函數不可用，將使用基本初始化");
-      // 基本初始化 - 在i18n.js無法正確載入時提供基本功能
+      console.warn("Multi-language initialization function is not available, using basic initialization");
+      // Basic initialization - provide basic functionality when i18n.js fails to load
       try {
         const currentLang =
           localStorage.getItem("preferred-language") ||
@@ -1296,44 +1296,44 @@ function initMultiLanguage() {
       }
     }
 
-    // 為語言切換添加自定義事件
+    // Add custom event for language switching
     try {
       document.querySelectorAll(".lang-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
           const lang = this.getAttribute("data-lang");
 
-          // 優先使用增強版語言切換函數
+          //Priority use the enhanced version language switching function
           if (typeof enhancedSetLanguage === "function") {
             enhancedSetLanguage(lang);
           } else if (typeof setLanguageWithAnimation === "function") {
-            // 次優先使用帶動畫效果的語言切換
+            //Secondary priority to use language switching with animation
             setLanguageWithAnimation(lang);
           } else if (typeof setLanguage === "function") {
-            // 兼容性處理，使用基本語言切換函數
+            //Compatibility processing, use basic language switching function
             setLanguage(lang);
           } else {
-            console.warn("語言切換函數不可用");
-            // 最基本處理 - 更新 HTML lang 屬性並保存偏好
+            console.warn("Language switching function is not available");
+            //Most basic processing - update HTML lang attribute and save preference
             try {
               localStorage.setItem("preferred-language", lang);
               document.documentElement.setAttribute("lang", lang);
             } catch (e) {
-              console.error("基本語言切換失敗:", e);
+              console.error("Basic language switching failed:", e);
             }
           }
         });
       });
     } catch (e) {
-      console.error("為語言按鈕添加事件監聽器時出錯:", e);
+      console.error("Error adding event listener for language button:", e);
     }
 
-    // 初始化時執行批量翻譯，優化性能
+    // Execute batch translation at initialization to optimize performance
     if (typeof batchApplyTranslations === "function") {
       batchApplyTranslations();
     }
   } else {
-    console.warn("i18n.js 尚未載入，無法啟用完整多語系功能");
-    // 嘗試提供基本的多語系支持
+    console.warn("i18n.js has not been loaded, unable to enable complete multi-language functionality");
+    // Try to provide basic multi-language support
     try {
       const basicLanguageSupport = function () {
         const langBtns = document.querySelectorAll(".lang-btn");
@@ -1346,7 +1346,7 @@ function initMultiLanguage() {
               localStorage.setItem("preferred-language", lang);
               document.documentElement.setAttribute("lang", lang);
 
-              // 更新按鈕狀態
+              // Update button state
               langBtns.forEach((b) => {
                 if (b.getAttribute("data-lang") === lang) {
                   b.classList.add("active");
@@ -1355,12 +1355,12 @@ function initMultiLanguage() {
                 }
               });
             } catch (e) {
-              console.error("基本語言切換失敗:", e);
+              console.error("Basic language switching failed:", e);
             }
           });
         });
 
-        // 初始化按鈕狀態
+        // Initialize button state
         try {
           const savedLang =
             localStorage.getItem("preferred-language") ||
@@ -1378,25 +1378,25 @@ function initMultiLanguage() {
 
           document.documentElement.setAttribute("lang", savedLang);
         } catch (e) {
-          console.error("初始化語言按鈕狀態失敗:", e);
+          console.error("Failed to initialize language button state:", e);
         }
       };
 
       basicLanguageSupport();
     } catch (e) {
-      console.error("基本多語系支持初始化失敗:", e);
+      console.error("Basic multilingual support initialization failed:", e);
     }
   }
 
-  // 監聽語言切換事件
+  // Listen for language change events
   try {
     document.addEventListener("languageChanged", function (event) {
       const lang = event.detail.language;
       console.log("Language changed to:", lang);
 
-      // 使用 translateText 函數更新特殊元素
+      // Use translateText function to update special elements
       const updateSpecialElements = function () {
-        // 安全地取得翻譯函數
+        // Safely get translation function
         const getTranslation = (key, defaultText) => {
           if (typeof safeTranslate === "function") {
             return safeTranslate(key, defaultText);
@@ -1408,7 +1408,7 @@ function initMultiLanguage() {
         };
 
         try {
-          // 更新複製按鈕文字
+          // Update copy button text
           const copyBtns = document.querySelectorAll(".copy-cmd-btn");
           const copyText = getTranslation("common.copy", {
             en: "Copy",
@@ -1416,20 +1416,20 @@ function initMultiLanguage() {
           });
 
           copyBtns.forEach((btn) => {
-            // 只更新沒有顯示"已複製"的按鈕
+            // Only update buttons that do not display "Copied!" or "Copied!"
             if (
               btn.textContent !== "Copied!" &&
-              btn.textContent !== "已複製!"
+              btn.textContent !== "Copied!"
             ) {
               btn.textContent = copyText;
             }
           });
         } catch (e) {
-          console.warn("更新複製按鈕文字失敗:", e);
+          console.warn("Failed to update copy button text:", e);
         }
 
         try {
-          // 更新模態窗口中的關閉按鈕文字
+          // Update modal window close button text
           const closeModalBtn = document.getElementById("close-modal-btn");
           if (closeModalBtn) {
             closeModalBtn.textContent = getTranslation("common.close", {
@@ -1438,52 +1438,52 @@ function initMultiLanguage() {
             });
           }
         } catch (e) {
-          console.warn("更新關閉按鈕文字失敗:", e);
+          console.warn("Failed to update close button text:", e);
         }
       };
 
-      // 使用 setTimeout 避免阻塞 UI
+      // Use setTimeout to avoid blocking UI
       setTimeout(updateSpecialElements, 0);
 
-      // 根據當前語言更新工作流程模態內容
+      // Update workflow modal window content according to current language
       try {
         updateWorkflowModalContent(lang);
       } catch (e) {
-        console.warn("更新工作流程模態內容失敗:", e);
+        console.warn("Failed to update workflow modal content:", e);
       }
     });
   } catch (e) {
-    console.error("添加語言變更事件監聽器失敗:", e);
+    console.error("Failed to add language change event listener:", e);
   }
 }
 
 /**
- * 根據當前語言更新工作流程模態窗口內容
- * @param {string} lang - 當前語言代碼 ("en" 或 "zh-TW")
+ * Update workflow modal window content according to current language
+ * @param {string} lang - Current language code ("en" or "zh-TW")
  */
 function updateWorkflowModalContent(lang) {
   const modal = document.getElementById("workflow-detail-modal");
   if (!modal) return;
 
-  // 獲取當前顯示的步驟
+  // Get the currently displayed step
   const modalTitle = document.getElementById("modal-title");
   const modalContent = document.getElementById("modal-content");
   const currentStep = modal.getAttribute("data-current-step");
 
   if (currentStep && modalTitle && modalContent) {
-    // 從工作流程詳情中獲取對應語言的內容
+    // Get corresponding language content from workflow details
     const workflowDetails = getWorkflowDetails();
     const langKey = lang === "en" ? "en" : "zh-TW";
 
     if (workflowDetails[langKey] && workflowDetails[langKey][currentStep]) {
       const stepData = workflowDetails[langKey][currentStep];
 
-      // 使用 requestAnimationFrame 優化渲染性能
+      // Use requestAnimationFrame to optimize rendering performance
       requestAnimationFrame(function () {
         modalTitle.textContent = stepData.title;
         modalContent.innerHTML = stepData.content;
 
-        // 為動態生成的內容添加 data-i18n 屬性
+        // Add data-i18n attribute to dynamically generated content
         const dynamicElements = modalContent.querySelectorAll("h4, p, li");
         dynamicElements.forEach(function (el, index) {
           const key = `workflow.step${currentStep}.content.${index}`;
@@ -1495,13 +1495,13 @@ function updateWorkflowModalContent(lang) {
 }
 
 /**
- * 獲取工作流程詳情數據
- * @returns {Object} 工作流程詳情對象
+ * Get workflow details data
+ * @returns {Object} Workflow details object
  */
 function getWorkflowDetails() {
-  // 返回工作流程詳情數據
+  // Return workflow details data
   return {
-    // 現有數據保持不變
+    // Keep existing data unchanged
     en: {
       1: {
         title: "Task Planning",

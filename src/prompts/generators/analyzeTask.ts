@@ -1,6 +1,6 @@
 /**
- * analyzeTask prompt 生成器
- * 負責將模板和參數組合成最終的 prompt
+ * analyzeTask prompt generator
+ * responsible for combining the template and parameters into the final prompt
  */
 
 import {
@@ -19,9 +19,9 @@ export interface AnalyzeTaskPromptParams {
 }
 
 /**
- * 獲取 analyzeTask 的完整 prompt
- * @param params prompt 參數
- * @returns 生成的 prompt
+ * Get the complete analyzeTask prompt
+ * @param params prompt parameters
+ * @returns generated prompt
  */
 export function getAnalyzeTaskPrompt(params: AnalyzeTaskPromptParams): string {
   const indexTemplate = loadPromptFromTemplate("analyzeTask/index.md");

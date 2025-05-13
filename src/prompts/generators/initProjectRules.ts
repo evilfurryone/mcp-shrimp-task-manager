@@ -1,6 +1,6 @@
 /**
- * initProjectRules prompt 生成器
- * 負責將模板和參數組合成最終的 prompt
+ * initProjectRules prompt generator
+ * responsible for combining the template and parameters into the final prompt
  */
 
 import {
@@ -10,27 +10,27 @@ import {
 } from "../loader.js";
 import { getRulesFilePath } from "../../utils/pathUtils.js";
 /**
- * initProjectRules prompt 參數介面
+ * initProjectRules prompt parameters interface
  */
 export interface InitProjectRulesPromptParams {
-  // 目前沒有額外參數，未來可按需擴展
+  // Currently no additional parameters, future expansion is possible
 }
 
 /**
- * 獲取 initProjectRules 的完整 prompt
- * @param params prompt 參數（可選）
- * @returns 生成的 prompt
+ * Get the complete initProjectRules prompt
+ * @param params prompt parameters (optional)
+ * @returns generated prompt
  */
 export function getInitProjectRulesPrompt(
   params?: InitProjectRulesPromptParams
 ): string {
-  // 使用基本模板
+  // Use basic template
   const rulesPath = getRulesFilePath();
   const indexTemplate = loadPromptFromTemplate("initProjectRules/index.md");
   const basePrompt = generatePrompt(indexTemplate, {
     rulesPath,
   });
 
-  // 載入可能的自定義 prompt (通過環境變數覆蓋或追加)
+  // Load possible custom prompt (through environment v ariables to override or append)
   return loadPrompt(basePrompt, "INIT_PROJECT_RULES");
 }
